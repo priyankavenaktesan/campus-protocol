@@ -1,106 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Admin Dashboard - Campus Career Portal</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
+
 </head>
+
 
 <body>
 
 <div class="container">
 
-    <!-- Header -->
+    <!-- HEADER -->
+
     <div class="page-header">
-        <h1>🛠️ Admin Dashboard</h1>
-        <p>College Placement Management</p>
-    </div>
 
+        <h1>
+            🛠️ Admin Dashboard
+        </h1>
 
-    <!-- Statistics -->
-    <div class="dashboard-grid">
-
-        <div class="dashboard-card">
-            <h2>👨‍🎓 Students</h2>
-            <h1>{{ student_count }}</h1>
-            <p>Registered Students</p>
-        </div>
-
-
-        <div class="dashboard-card">
-            <h2>🏢 Companies</h2>
-            <h1>{{ company_count }}</h1>
-            <p>Available Companies</p>
-        </div>
-
-
-        <div class="dashboard-card">
-            <h2>📋 Applications</h2>
-            <h1>{{ application_count }}</h1>
-            <p>Total Applications</p>
-        </div>
+        <p>
+            College Placement Management
+        </p>
 
     </div>
 
 
-    <!-- Admin Actions -->
-    <div class="profile-card">
+    <!-- DASHBOARD STATISTICS -->
 
-        <h2>⚙️ Management</h2>
-
-        <div class="button-group">
-
-            <a href="{{ url_for('add_company') }}"
-               class="btn">
-                ➕ Add Company
-            </a>
+    <div class="feature-grid">
 
 
-            <a href="{{ url_for('admin_applications') }}"
-               class="btn">
-                📋 Manage Applications
-            </a>
+        <!-- STUDENTS -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                👨‍🎓
+            </div>
+
+            <h2>
+                Students
+            </h2>
+
+            <p>
+                Registered Students
+            </p>
+
+            <h1>
+                {{ total_students }}
+            </h1>
+
+        </div>
 
 
-            <a href="{{ url_for('analytics') }}"
-               class="btn">
-                📊 Placement Analytics
-            </a>
+        <!-- COMPANIES -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🏢
+            </div>
+
+            <h2>
+                Companies
+            </h2>
+
+            <p>
+                Available Companies
+            </p>
+
+            <h1>
+                {{ total_companies }}
+            </h1>
+
+        </div>
+
+
+        <!-- APPLICATIONS -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                📋
+            </div>
+
+            <h2>
+                Applications
+            </h2>
+
+            <p>
+                Total Applications
+            </p>
+
+            <h1>
+                {{ total_applications }}
+            </h1>
+
+        </div>
+
+
+        <!-- SELECTED -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🎉
+            </div>
+
+            <h2>
+                Selected
+            </h2>
+
+            <p>
+                Selected Students
+            </p>
+
+            <h1>
+                {{ selected }}
+            </h1>
 
         </div>
 
     </div>
 
 
-    <!-- Quick Information -->
-    <div class="profile-card">
+    <!-- MANAGEMENT -->
 
-        <h2>📌 Admin Functions</h2>
+    <h2>
+        ⚙️ Management
+    </h2>
 
-        <p>• Add and manage placement companies</p>
-        <p>• View student applications</p>
-        <p>• Update application status</p>
-        <p>• View placement statistics</p>
-        <p>• Monitor overall placement activities</p>
+    <div class="button-row">
+
+        <a href="{{ url_for('add_company') }}"
+           class="btn primary">
+            ➕ Add Company
+        </a>
+
+
+        <a href="{{ url_for('admin_applications') }}"
+           class="btn primary">
+            📋 Manage Applications
+        </a>
+
+
+        <a href="{{ url_for('analytics') }}"
+           class="btn primary">
+            📊 Placement Analytics
+        </a>
 
     </div>
 
 
-    <!-- Logout -->
-    <div class="form-footer">
+    <!-- ADMIN FUNCTIONS -->
+
+    <h2>
+        📌 Admin Functions
+    </h2>
+
+    <div class="feature-card">
+
+        <p>
+            • Add and manage placement companies
+        </p>
+
+        <p>
+            • View student applications
+        </p>
+
+        <p>
+            • Update application status
+        </p>
+
+        <p>
+            • View placement statistics
+        </p>
+
+        <p>
+            • Monitor overall placement activities
+        </p>
+
+    </div>
+
+
+    <!-- LOGOUT -->
+
+    <div class="button-row">
 
         <a href="{{ url_for('admin_logout') }}"
-           class="btn logout-btn">
+           class="btn secondary">
             🚪 Logout
         </a>
 
     </div>
 
+
 </div>
 
 </body>
+
 </html>
