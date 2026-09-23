@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Profile - Campus Career Portal</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>✏️ Edit Profile</h1>
+        <p>Update your personal and academic information</p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="profile-card">
+
+        <form method="POST">
+
+            <h2>Personal Information</h2>
+
+            <label>Name</label>
+            <input type="text"
+                   name="name"
+                   value="{{ student['name'] }}"
+                   required>
+
+            <label>Father's Name</label>
+            <input type="text"
+                   name="father_name"
+                   value="{{ student['father_name'] or '' }}">
+
+            <label>Mother's Name</label>
+            <input type="text"
+                   name="mother_name"
+                   value="{{ student['mother_name'] or '' }}">
+
+            <label>Date of Birth</label>
+            <input type="date"
+                   name="date_of_birth"
+                   value="{{ student['date_of_birth'] or '' }}">
+
+            <label>Gender</label>
+            <select name="gender">
+                <option value="">Select Gender</option>
+
+                <option value="Male"
+                    {% if student['gender'] == 'Male' %}selected{% endif %}>
+                    Male
+                </option>
+
+                <option value="Female"
+                    {% if student['gender'] == 'Female' %}selected{% endif %}>
+                    Female
+                </option>
+
+                <option value="Other"
+                    {% if student['gender'] == 'Other' %}selected{% endif %}>
+                    Other
+                </option>
+            </select>
+
+            <label>Phone</label>
+            <input type="text"
+                   name="phone"
+                   value="{{ student['phone'] or '' }}"
+                   maxlength="10">
+
+            <label>Email</label>
+            <input type="email"
+                   value="{{ student['email'] }}"
+                   readonly>
+
+            <h2>🎓 Academic Information</h2>
+
+            <label>Department</label>
+            <input type="text"
+                   name="department"
+                   value="{{ student['department'] }}"
+                   required>
+
+            <label>CGPA</label>
+            <input type="number"
+                   name="cgpa"
+                   value="{{ student['cgpa'] }}"
+                   min="0"
+                   max="10"
+                   step="0.01"
+                   required>
+
+            <h2>💻 Skills</h2>
+
+            <label>Skills</label>
+            <input type="text"
+                   name="skills"
+                   value="{{ student['skills'] or '' }}"
+                   placeholder="Example: Python, Java, SQL, HTML">
+
+            <div class="button-group">
+
+                <button type="submit" class="btn">
+                    💾 Save Changes
+                </button>
+
+                <a href="{{ url_for('profile') }}" class="btn">
+                    ← Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

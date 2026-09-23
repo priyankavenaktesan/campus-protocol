@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Applications - Campus Career Portal</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>📋 My Applications</h1>
+        <p>Track your placement applications</p>
+    </div>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+
+    {% if applications %}
+
+        <div class="company-grid">
+
+            {% for application in applications %}
+
+                <div class="company-card">
+
+                    <h2>
+                        🏢 {{ application['company_name'] }}
+                    </h2>
+
+                    <p>
+                        <strong>💼 Job Role:</strong>
+                        {{ application['job_role'] }}
+                    </p>
+
+                    <p>
+                        <strong>💰 Package:</strong>
+                        {{ application['package'] }}
+                    </p>
+
+                    <p>
+                        <strong>📅 Applied On:</strong>
+                        {{ application['applied_at'] or 'N/A' }}
+                    </p>
+
+                    <p>
+                        <strong>📌 Application Status:</strong>
+                    </p>
+
+                    {% if application['status'] == 'Selected' %}
+
+                        <div class="alert success">
+                            🎉 Selected
+                        </div>
+
+                    {% elif application['status'] == 'Rejected' %}
+
+                        <div class="alert error">
+                            ❌ Rejected
+                        </div>
+
+                    {% elif application['status'] == 'Shortlisted' %}
+
+                        <div class="alert success">
+                            ⭐ Shortlisted
+                        </div>
+
+                    {% else %}
+
+                        <div class="alert">
+                            ⏳ {{ application['status'] }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-box">
+
+            <h2>📭 No Applications Yet</h2>
+
+            <p>
+                You have not applied for any company yet.
+            </p>
+
+            <br>
+
+            <a href="{{ url_for('companies') }}" class="btn">
+                🏢 Explore Companies
+            </a>
+
+        </div>
+
+    {% endif %}
+
+
+    <div class="button-group">
+
+        <a href="{{ url_for('companies') }}" class="btn">
+            🏢 Companies
+        </a>
+
+        <a href="{{ url_for('dashboard') }}" class="btn">
+            ← Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

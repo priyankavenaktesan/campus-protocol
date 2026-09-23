@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Companies - Smart Campus Career Portal</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .companies-container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            color: #1f4e79;
+            margin-bottom: 8px;
+        }
+
+        .company-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .company-card {
+            background: white;
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+            border: 1px solid #e5e7eb;
+        }
+
+        .company-card h2 {
+            color: #1f4e79;
+            margin-bottom: 8px;
+        }
+
+        .job-role {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .company-info {
+            margin: 10px 0;
+            line-height: 1.7;
+        }
+
+        .match-box {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #f3f7fb;
+            font-weight: bold;
+        }
+
+        .high-match {
+            color: #15803d;
+        }
+
+        .medium-match {
+            color: #ca8a04;
+        }
+
+        .low-match {
+            color: #dc2626;
+        }
+
+        .details-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 18px;
+            background: #1f4e79;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+        .details-btn:hover {
+            background: #163a5c;
+        }
+
+        .no-companies {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #1f4e79;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="companies-container">
+
+    <div class="page-header">
+        <h1>🏢 Available Companies</h1>
+        <p>Companies available for your profile</p>
+    </div>
+
+    {% if companies %}
+
+        <div class="company-grid">
+
+            {% for item in companies %}
+
+                {% set company = item.company %}
+                {% set match = item.match %}
+                {% set match_percentage = match["percentage"] %}
+
+                <div class="company-card">
+
+                    <h2>{{ company["company_name"] }}</h2>
+
+                    <div class="job-role">
+                        💼 {{ company["job_role"] }}
+                    </div>
+
+                    <div class="company-info">
+                        <strong>Minimum CGPA:</strong>
+                        {{ company["min_cgpa"] }}
+                    </div>
+
+                    <div class="company-info">
+                        <strong>Eligible Department:</strong>
+                        {{ company["department"] }}
+                    </div>
+
+                    <div class="company-info">
+                        <strong>Package:</strong>
+                        {{ company["package"] }}
+                    </div>
+
+                    <div class="company-info">
+                        <strong>Required Skills:</strong>
+                        {{ company["required_skills"] or "Not specified" }}
+                    </div>
+
+                    <div class="match-box">
+
+                        🤖 Profile Match:
+                        <span
+                            {% if match_percentage >= 80 %}
+                                class="high-match"
+                            {% elif match_percentage >= 50 %}
+                                class="medium-match"
+                            {% else %}
+                                class="low-match"
+                            {% endif %}
+                        >
+                            {{ match_percentage }}%
+                        </span>
+
+                    </div>
+
+                    <a
+                        href="{{ url_for('company_details', company_id=company['id']) }}"
+                        class="details-btn"
+                    >
+                        View Details →
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="no-companies">
+            <h2>📭 No Companies Available</h2>
+            <p>No placement companies have been added yet.</p>
+        </div>
+
+    {% endif %}
+
+    <a href="{{ url_for('dashboard') }}" class="back-btn">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

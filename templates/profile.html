@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile - Campus Career Portal</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>👤 My Profile</h1>
+        <p>Student Profile Information</p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+
+    <!-- Personal Information -->
+    <div class="profile-card">
+
+        <h2>Personal Information</h2>
+
+        <div class="profile-row">
+            <span>Name</span>
+            <strong>{{ student['name'] }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>Father's Name</span>
+            <strong>{{ student['father_name'] or 'Not provided' }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>Mother's Name</span>
+            <strong>{{ student['mother_name'] or 'Not provided' }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>Date of Birth</span>
+            <strong>{{ student['date_of_birth'] or 'Not provided' }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>Gender</span>
+            <strong>{{ student['gender'] or 'Not provided' }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>Phone</span>
+            <strong>{{ student['phone'] or 'Not provided' }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>Email</span>
+            <strong>{{ student['email'] }}</strong>
+        </div>
+
+    </div>
+
+
+    <!-- Academic Information -->
+    <div class="profile-card">
+
+        <h2>🎓 Academic Information</h2>
+
+        <div class="profile-row">
+            <span>Department</span>
+            <strong>{{ student['department'] }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>CGPA</span>
+            <strong>{{ student['cgpa'] }}</strong>
+        </div>
+
+    </div>
+
+
+    <!-- Skills -->
+    <div class="profile-card">
+
+        <h2>💻 Skills</h2>
+
+        {% if student['skills'] %}
+
+            <div class="skills-box">
+                {{ student['skills'] }}
+            </div>
+
+        {% else %}
+
+            <p>No skills added yet.</p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Buttons -->
+    <div class="button-group">
+
+        <a href="{{ url_for('edit_profile') }}" class="btn">
+            ✏️ Edit Profile
+        </a>
+
+        <a href="{{ url_for('dashboard') }}" class="btn">
+            ← Dashboard
+        </a>
+
+        <a href="{{ url_for('companies') }}" class="btn">
+            🏢 View Companies
+        </a>
+
+        <a href="{{ url_for('resume') }}" class="btn">
+            📄 Resume Analyzer
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

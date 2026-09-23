@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title> Campus Career Portal</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="page-header">
+
+        <div style="font-size: 45px;">
+            🎓
+        </div>
+
+        <h1>
+            Campus Career Portal
+        </h1>
+
+        <p>
+            A college placement management system that helps students
+            discover suitable job opportunities, analyze their skills,
+            upload resumes and apply for companies.
+        </p>
+
+    </div>
+
+
+    <!-- MAIN BUTTONS -->
+    <div class="button-row">
+
+        <a href="{{ url_for('login') }}"
+           class="btn primary">
+            Student Login
+        </a>
+
+        <a href="{{ url_for('register') }}"
+           class="btn secondary">
+            Student Registration
+        </a>
+
+        <a href="{{ url_for('admin_login') }}"
+           class="btn secondary">
+            Placement Officer Login
+        </a>
+
+    </div>
+
+
+    <!-- FEATURES -->
+    <div class="feature-grid">
+
+
+        <!-- JOB MATCHING -->
+        <a href="{{ url_for('login') }}"
+           class="feature-card">
+
+            <div class="feature-icon">
+                💼
+            </div>
+
+            <h2>
+                Job Matching
+            </h2>
+
+            <p>
+                Find companies based on CGPA,
+                department and skills.
+            </p>
+
+            <span class="click-text">
+                Click to Login →
+            </span>
+
+        </a>
+
+
+        <!-- RESUME ANALYZER -->
+        <a href="{{ url_for('login') }}"
+           class="feature-card">
+
+            <div class="feature-icon">
+                📄
+            </div>
+
+            <h2>
+                Resume Analyzer
+            </h2>
+
+            <p>
+                Upload your resume and
+                identify available skills.
+            </p>
+
+            <span class="click-text">
+                Click to Login →
+            </span>
+
+        </a>
+
+
+        <!-- PLACEMENT ANALYTICS -->
+        <a href="{{ url_for('admin_login') }}"
+           class="feature-card">
+
+            <div class="feature-icon">
+                📊
+            </div>
+
+            <h2>
+                Placement Analytics
+            </h2>
+
+            <p>
+                Track applications and
+                placement statistics.
+            </p>
+
+            <span class="click-text">
+                Officer Login →
+            </span>
+
+        </a>
+
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+    © 2026 Campus Career Portal
+</footer>
+
+
+</body>
+</html>

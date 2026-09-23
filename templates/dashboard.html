@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard - Campus Career Portal</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="page-header">
+        <h1>🎓 Campus Career Portal</h1>
+
+        <p>
+            Welcome,
+            <strong>{{ name }}</strong> 👋
+        </p>
+    </div>
+
+    <!-- Dashboard Cards -->
+    <div class="dashboard-grid">
+
+        <!-- Profile -->
+        <div class="dashboard-card">
+            <h2>👤 My Profile</h2>
+
+            <p>
+                View and update your personal,
+                academic and skill information.
+            </p>
+
+            <a href="{{ url_for('profile') }}" class="btn">
+                View Profile
+            </a>
+        </div>
+
+
+        <!-- Companies -->
+        <div class="dashboard-card">
+            <h2>🏢 Companies</h2>
+
+            <p>
+                Explore companies and job opportunities
+                based on your eligibility.
+            </p>
+
+            <a href="{{ url_for('companies') }}" class="btn">
+                View Companies
+            </a>
+        </div>
+
+
+        <!-- Recommendations -->
+        <div class="dashboard-card">
+            <h2>🤖 Smart Recommendations</h2>
+
+            <p>
+                Get job recommendations based on
+                CGPA, department and skills.
+            </p>
+
+            <a href="{{ url_for('recommendations') }}" class="btn">
+                View Recommendations
+            </a>
+        </div>
+
+
+        <!-- Resume -->
+        <div class="dashboard-card">
+            <h2>📄 Resume Analyzer</h2>
+
+            <p>
+                Upload your resume and identify
+                your available skills.
+            </p>
+
+            <a href="{{ url_for('resume') }}" class="btn">
+                Analyze Resume
+            </a>
+        </div>
+
+
+        <!-- Skill Gap -->
+        <div class="dashboard-card">
+            <h2>📊 Skill Gap Analyzer</h2>
+
+            <p>
+                Find the skills you need to improve
+                for available job roles.
+            </p>
+
+            <a href="{{ url_for('skill_gap') }}" class="btn">
+                Check Skill Gap
+            </a>
+        </div>
+
+
+        <!-- Applications -->
+        <div class="dashboard-card">
+            <h2>📋 My Applications</h2>
+
+            <p>
+                Track the companies you have applied
+                to and view application status.
+            </p>
+
+            <a href="{{ url_for('my_applications') }}" class="btn">
+                View Applications
+            </a>
+        </div>
+
+    </div>
+
+
+    <!-- Application Summary -->
+    <div class="summary-box">
+
+        <h2>📌 Application Summary</h2>
+
+        <p>
+            Total Applications:
+            <strong>{{ application_count }}</strong>
+        </p>
+
+    </div>
+
+
+    <!-- Logout -->
+    <div class="form-footer">
+
+        <a href="{{ url_for('logout') }}" class="btn logout-btn">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

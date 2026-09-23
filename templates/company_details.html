@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Company Details - Smart Campus Career Portal</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .details-container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .header-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+            margin-bottom: 25px;
+        }
+
+        .header-card h1 {
+            color: #1f4e79;
+            margin-bottom: 8px;
+        }
+
+        .section {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            color: #1f4e79;
+            margin-bottom: 18px;
+        }
+
+        .info-row {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .match-card {
+            background: #f3f7fb;
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .match-percentage {
+            font-size: 28px;
+            font-weight: bold;
+            color: #15803d;
+            margin-bottom: 12px;
+        }
+
+        .score-row {
+            margin: 8px 0;
+        }
+
+        .eligible {
+            background: #dcfce7;
+            color: #166534;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .not-eligible {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .skills {
+            margin-top: 12px;
+        }
+
+        .skill {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #075985;
+            padding: 6px 10px;
+            border-radius: 15px;
+            margin: 4px;
+            font-size: 14px;
+        }
+
+        .missing-skill {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 20px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 8px;
+            margin-top: 8px;
+        }
+
+        .apply-btn {
+            background: #15803d;
+            color: white;
+        }
+
+        .back-btn {
+            background: #1f4e79;
+            color: white;
+        }
+
+        .dashboard-btn {
+            background: #475569;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="details-container">
+
+    <!-- HEADER -->
+    <div class="header-card">
+        <h1>🏢 {{ company["company_name"] }}</h1>
+        <p>Company & Job Details</p>
+    </div>
+
+
+    <!-- JOB INFORMATION -->
+    <div class="section">
+
+        <h2>💼 Job Information</h2>
+
+        <div class="info-row">
+            <strong>Company Name:</strong>
+            {{ company["company_name"] }}
+        </div>
+
+        <div class="info-row">
+            <strong>Job Role:</strong>
+            {{ company["job_role"] }}
+        </div>
+
+        <div class="info-row">
+            <strong>Minimum CGPA:</strong>
+            {{ company["min_cgpa"] }}
+        </div>
+
+        <div class="info-row">
+            <strong>Eligible Department:</strong>
+            {{ company["department"] }}
+        </div>
+
+        <div class="info-row">
+            <strong>Package:</strong>
+            {{ company["package"] }}
+        </div>
+
+        <div class="info-row">
+            <strong>Required Skills:</strong>
+            {{ company["required_skills"] or "Not specified" }}
+        </div>
+
+    </div>
+
+
+    <!-- SMART JOB MATCH -->
+    <div class="section">
+
+        <h2>🤖 Smart Job Match</h2>
+
+        <div class="match-card">
+
+            <div class="match-percentage">
+                {{ match["percentage"] }}% Match
+            </div>
+
+            <div class="score-row">
+                <strong>Skill Score:</strong>
+                {{ match["skill_score"] }}%
+            </div>
+
+            <div class="score-row">
+                <strong>CGPA Score:</strong>
+                {{ match["cgpa_score"] }}%
+            </div>
+
+            <div class="score-row">
+                <strong>Department Score:</strong>
+                {{ match["department_score"] }}%
+            </div>
+
+            {% if match["matched_skills"] %}
+                <div class="skills">
+                    <strong>Matched Skills:</strong><br>
+
+                    {% for skill in match["matched_skills"] %}
+                        <span class="skill">
+                            ✓ {{ skill }}
+                        </span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+
+            {% if match["missing_skills"] %}
+                <div class="skills">
+                    <strong>Missing Skills:</strong><br>
+
+                    {% for skill in match["missing_skills"] %}
+                        <span class="skill missing-skill">
+                            ✗ {{ skill }}
+                        </span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ELIGIBILITY -->
+    <div class="section">
+
+        <h2>📋 Eligibility</h2>
+
+        {% if match["eligible"] %}
+
+            <div class="eligible">
+                ✅ You are eligible for this company!
+            </div>
+
+            <p>
+                Your CGPA, department and required skills satisfy
+                the current job requirements.
+            </p>
+
+            <a
+                href="{{ url_for('apply', company_id=company['id']) }}"
+                class="btn apply-btn"
+            >
+                🚀 Apply Now
+            </a>
+
+        {% else %}
+
+            <div class="not-eligible">
+                ❌ You are currently not eligible for this company.
+            </div>
+
+            <p>
+                Please check the CGPA, department and required skills
+                for this job.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+    <div>
+
+        <a
+            href="{{ url_for('companies') }}"
+            class="btn back-btn"
+        >
+            ← Back to Companies
+        </a>
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="btn dashboard-btn"
+        >
+            🏠 Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

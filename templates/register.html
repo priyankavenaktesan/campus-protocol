@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Registration</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container narrow">
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+        <div style="font-size: 42px;">
+            🎓
+        </div>
+
+        <h1>
+            Student Registration
+        </h1>
+
+        <p>
+            Create your Campus Career Portal account
+        </p>
+
+    </div>
+
+
+    <!-- REGISTRATION FORM -->
+
+    <div class="card">
+
+        <form method="POST"
+              action="{{ url_for('register') }}">
+
+
+            <!-- NAME -->
+
+            <label for="name">
+                Full Name *
+            </label>
+
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter your full name"
+                required
+            >
+
+
+            <!-- FATHER NAME -->
+
+            <label for="father_name">
+                Father Name *
+            </label>
+
+            <input
+                type="text"
+                id="father_name"
+                name="father_name"
+                placeholder="Enter father name"
+                required
+            >
+
+
+            <!-- MOTHER NAME -->
+
+            <label for="mother_name">
+                Mother Name *
+            </label>
+
+            <input
+                type="text"
+                id="mother_name"
+                name="mother_name"
+                placeholder="Enter mother name"
+                required
+            >
+
+
+            <!-- DATE OF BIRTH -->
+
+            <label for="date_of_birth">
+                Date of Birth *
+            </label>
+
+            <input
+                type="date"
+                id="date_of_birth"
+                name="date_of_birth"
+                required
+            >
+
+
+            <!-- GENDER -->
+
+            <label for="gender">
+                Gender *
+            </label>
+
+            <select
+                id="gender"
+                name="gender"
+                required
+            >
+
+                <option value="">
+                    -- Select Gender --
+                </option>
+
+                <option value="Female">
+                    Female
+                </option>
+
+                <option value="Male">
+                    Male
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+
+            <!-- PHONE -->
+
+            <label for="phone">
+                Phone Number *
+            </label>
+
+            <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="Enter 10-digit phone number"
+                maxlength="10"
+                pattern="[0-9]{10}"
+                required
+            >
+
+
+            <!-- EMAIL -->
+
+            <label for="email">
+                Email Address *
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+            >
+
+
+            <!-- PASSWORD -->
+
+            <label for="password">
+                Password *
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Minimum 6 characters"
+                minlength="6"
+                required
+            >
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <label for="confirm_password">
+                Confirm Password *
+            </label>
+
+            <input
+                type="password"
+                id="confirm_password"
+                name="confirm_password"
+                placeholder="Re-enter your password"
+                minlength="6"
+                required
+            >
+
+
+            <!-- DEPARTMENT -->
+
+            <label for="department">
+                Department *
+            </label>
+
+            <select
+                id="department"
+                name="department"
+                required
+            >
+
+                <option value="">
+                    -- Select Department --
+                </option>
+
+                <option value="IT">
+                    Information Technology (IT)
+                </option>
+
+                <option value="CSE">
+                    Computer Science Engineering (CSE)
+                </option>
+
+                <option value="ECE">
+                    Electronics and Communication Engineering (ECE)
+                </option>
+
+                <option value="EEE">
+                    Electrical and Electronics Engineering (EEE)
+                </option>
+
+                <option value="MECH">
+                    Mechanical Engineering
+                </option>
+
+                <option value="CIVIL">
+                    Civil Engineering
+                </option>
+
+                <option value="AI&DS">
+                    Artificial Intelligence & Data Science
+                </option>
+
+            </select>
+
+
+            <!-- CGPA -->
+
+            <label for="cgpa">
+                CGPA *
+            </label>
+
+            <input
+                type="number"
+                id="cgpa"
+                name="cgpa"
+                placeholder="Example: 8.2"
+                min="0"
+                max="10"
+                step="0.01"
+                required
+            >
+
+
+            <!-- SKILLS -->
+
+            <label for="skills">
+                Skills
+            </label>
+
+            <textarea
+                id="skills"
+                name="skills"
+                rows="4"
+                placeholder="Example: Python, SQL, HTML, CSS, Flask"
+            ></textarea>
+
+            <small>
+                Enter skills separated by commas.
+            </small>
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="btn primary"
+            >
+                Create Account
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- LINKS -->
+
+    <div class="links">
+
+        <p>
+            Already have an account?
+            <a href="{{ url_for('login') }}">
+                Login here
+            </a>
+        </p>
+
+        <p>
+            <a href="{{ url_for('index') }}">
+                ← Back to Home
+            </a>
+        </p>
+
+    </div>
+
+</div>
+
+
+<footer>
+    © 2026 Campus Career Portal
+</footer>
+
+
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resume Analyzer</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        input[type="file"] {
+            margin: 15px 0;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .file-link {
+            color: #2563eb;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .file-link:hover {
+            text-decoration: underline;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .skill {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .no-skills {
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .links {
+            margin-top: 25px;
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .links a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #4c1d95;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📄 Resume Analyzer</h1>
+
+
+    <!-- Flash Messages -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="{{ 'error' if category == 'error' else 'success' }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- Upload Resume -->
+
+    <div class="card">
+
+        <h2>📤 Upload Resume</h2>
+
+        <p>
+            Supported formats:
+            <b>PDF, DOCX, TXT</b>
+        </p>
+
+        <p>
+            Maximum file size:
+            <b>5 MB</b>
+        </p>
+
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <input
+                type="file"
+                name="resume"
+                accept=".pdf,.docx,.txt"
+                required
+            >
+
+            <br><br>
+
+            <button type="submit">
+                🔍 Upload & Analyze
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Uploaded Resume -->
+
+    {% if student and student["resume_filename"] %}
+
+    <div class="card">
+
+        <h2>📎 Uploaded Resume</h2>
+
+        <p>
+
+            <b>File Name:</b>
+
+            <a
+                class="file-link"
+                href="{{ url_for('static', filename='uploads/' + student['resume_filename']) }}"
+                target="_blank"
+            >
+                {{ student["resume_filename"] }}
+            </a>
+
+        </p>
+
+        <p>
+            👆 Click the filename to open your resume.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- Detected Skills -->
+
+    <div class="card">
+
+        <h2>🧠 Detected Skills</h2>
+
+        {% if detected_skills %}
+
+            <p>
+                Skills detected from your uploaded resume:
+            </p>
+
+            <div class="skills">
+
+                {% for skill in detected_skills %}
+
+                    <span class="skill">
+                        ✓ {{ skill }}
+                    </span>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="no-skills">
+                No skills detected yet.
+                Please upload a resume containing your skills.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Navigation -->
+
+    <div class="links">
+
+        <a href="{{ url_for('dashboard') }}">
+            ← Dashboard
+        </a>
+
+        <a href="{{ url_for('recommendations') }}">
+            🤖 Recommendations
+        </a>
+
+        <a href="{{ url_for('skill_gap') }}">
+            📊 Skill Gap
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Recommendations - Smart Campus Career Portal</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .recommendations-container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .header-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+            margin-bottom: 25px;
+        }
+
+        .header-card h1 {
+            color: #1f4e79;
+            margin-bottom: 8px;
+        }
+
+        .recommendation-card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .recommendation-card h2 {
+            color: #1f4e79;
+            margin-bottom: 8px;
+        }
+
+        .job-role {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .info-row {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .match-box {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f3f7fb;
+            border-radius: 8px;
+        }
+
+        .match-percentage {
+            font-size: 26px;
+            font-weight: bold;
+            color: #15803d;
+            margin-bottom: 10px;
+        }
+
+        .score {
+            margin: 5px 0;
+        }
+
+        .skills {
+            margin-top: 12px;
+        }
+
+        .skill {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #075985;
+            padding: 6px 10px;
+            border-radius: 15px;
+            margin: 4px;
+            font-size: 14px;
+        }
+
+        .missing {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .details-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 18px;
+            background: #1f4e79;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+        .details-btn:hover {
+            background: #163a5c;
+        }
+
+        .no-recommendations {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            color: #1f4e79;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="recommendations-container">
+
+    <!-- HEADER -->
+    <div class="header-card">
+        <h1>🤖 Smart Job Recommendations</h1>
+        <p>
+            Job recommendations based on your CGPA, department and skills.
+        </p>
+    </div>
+
+
+    {% if recommendations %}
+
+        {% for item in recommendations %}
+
+            {% set company = item.company %}
+            {% set match = item.match %}
+            {% set match_percentage = match["percentage"] %}
+
+            <div class="recommendation-card">
+
+                <h2>
+                    🏢 {{ company["company_name"] }}
+                </h2>
+
+                <div class="job-role">
+                    💼 {{ company["job_role"] }}
+                </div>
+
+                <div class="info-row">
+                    <strong>Minimum CGPA:</strong>
+                    {{ company["min_cgpa"] }}
+                </div>
+
+                <div class="info-row">
+                    <strong>Department:</strong>
+                    {{ company["department"] }}
+                </div>
+
+                <div class="info-row">
+                    <strong>Package:</strong>
+                    {{ company["package"] }}
+                </div>
+
+                <div class="info-row">
+                    <strong>Required Skills:</strong>
+                    {{ company["required_skills"] or "Not specified" }}
+                </div>
+
+
+                <!-- MATCH DETAILS -->
+                <div class="match-box">
+
+                    <div class="match-percentage">
+                        🤖 {{ match_percentage }}% Match
+                    </div>
+
+                    <div class="score">
+                        <strong>Skill Score:</strong>
+                        {{ match["skill_score"] }}%
+                    </div>
+
+                    <div class="score">
+                        <strong>CGPA Score:</strong>
+                        {{ match["cgpa_score"] }}%
+                    </div>
+
+                    <div class="score">
+                        <strong>Department Score:</strong>
+                        {{ match["department_score"] }}%
+                    </div>
+
+
+                    {% if match["matched_skills"] %}
+
+                        <div class="skills">
+
+                            <strong>Matched Skills:</strong><br>
+
+                            {% for skill in match["matched_skills"] %}
+
+                                <span class="skill">
+                                    ✓ {{ skill }}
+                                </span>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if match["missing_skills"] %}
+
+                        <div class="skills">
+
+                            <strong>Missing Skills:</strong><br>
+
+                            {% for skill in match["missing_skills"] %}
+
+                                <span class="skill missing">
+                                    ✗ {{ skill }}
+                                </span>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- VIEW DETAILS -->
+                <a
+                    href="{{ url_for('company_details', company_id=company['id']) }}"
+                    class="details-btn"
+                >
+                    View Details →
+                </a>
+
+            </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+        <div class="no-recommendations">
+
+            <h2>📭 No Recommendations</h2>
+
+            <p>
+                No matching jobs are currently available for your profile.
+            </p>
+
+            <p>
+                Try updating your skills or check the Companies section.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+
+    <a
+        href="{{ url_for('dashboard') }}"
+        class="back-btn"
+    >
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Apply - Campus Career Portal</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="page-header">
+        <h1>🚀 Apply for Job</h1>
+        <p>Submit your application</p>
+    </div>
+
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+
+    <!-- Company Information -->
+    <div class="profile-card">
+
+        <h2>🏢 {{ company['company_name'] }}</h2>
+
+        <div class="profile-row">
+            <span>Job Role</span>
+            <strong>{{ company['job_role'] }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>Minimum CGPA</span>
+            <strong>{{ company['min_cgpa'] }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>Department</span>
+            <strong>{{ company['department'] }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>Package</span>
+            <strong>{{ company['package'] }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>Required Skills</span>
+            <strong>
+                {{ company['required_skills'] or 'Not specified' }}
+            </strong>
+        </div>
+
+    </div>
+
+
+    <!-- Student Information -->
+    <div class="profile-card">
+
+        <h2>👤 Your Information</h2>
+
+        <div class="profile-row">
+            <span>Name</span>
+            <strong>{{ student['name'] }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>Email</span>
+            <strong>{{ student['email'] }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>Department</span>
+            <strong>{{ student['department'] }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>CGPA</span>
+            <strong>{{ student['cgpa'] }}</strong>
+        </div>
+
+    </div>
+
+
+    <!-- Application Form -->
+    <div class="profile-card">
+
+        <h2>📝 Confirm Application</h2>
+
+        <p>
+            Please make sure your profile information is
+            correct before applying.
+        </p>
+
+        <form method="POST"
+              action="{{ url_for(
+                  'apply',
+                  company_id=company['id']
+              ) }}">
+
+            <button type="submit" class="btn">
+                🚀 Confirm & Apply
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Navigation -->
+    <div class="button-group">
+
+        <a href="{{ url_for(
+            'company_details',
+            company_id=company['id']
+        ) }}"
+           class="btn">
+            ← Back to Company
+        </a>
+
+        <a href="{{ url_for('dashboard') }}"
+           class="btn">
+            🏠 Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
