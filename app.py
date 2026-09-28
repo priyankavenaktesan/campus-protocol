@@ -14,13 +14,32 @@ import re
 from werkzeug.utils import secure_filename
 
 
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+
 app = Flask(__name__)
 
-app.secret_key = "college-placement-secret-key"
+app.secret_key = os.environ.get(
+    "SECRET_KEY",
+    "college-placement-secret-key"
+)
 
-DATABASE = "database.db"
+ADMIN_USERNAME = os.environ.get(
+    "ADMIN_USERNAME",
+    "admin"
+)
+
+ADMIN_PASSWORD = os.environ.get(
+    "ADMIN_PASSWORD",
+    "admin123"
+)
+
+DATABASE = os.environ.get(
+    "DATABASE_PATH",
+    os.path.join(BASE_DIR, "database.db")
+)
 
 UPLOAD_FOLDER = os.path.join(
+    BASE_DIR,
     "static",
     "uploads"
 )
@@ -377,6 +396,11 @@ def calculate_match(
             & required_skills_set
         )
 
+        missing_skills = sorted(
+            required_skills_set
+            - student_skills_set
+        )
+
         skill_score = (
             len(matched_skills)
             / len(required_skills_set)
@@ -385,6 +409,8 @@ def calculate_match(
     else:
 
         matched_skills = []
+
+        missing_skills = []
 
         skill_score = 100
 
@@ -476,6 +502,7 @@ def calculate_match(
             2
         ),
         "matched_skills": matched_skills,
+        "missing_skills": missing_skills,
         "required_skills": required_skills,
         "eligible": eligible
     }
@@ -602,6 +629,37 @@ def create_database():
             ALTER TABLE applications
             ADD COLUMN applied_at TEXT
         """)
+
+    # Seed initial companies if table is empty (e.g. on fresh deployment)
+    company_count = conn.execute(
+        "SELECT COUNT(*) AS count FROM companies"
+    ).fetchone()["count"]
+
+    if company_count == 0:
+        sample_companies = [
+            ("Infosys", "software developer", 8.9, "IT", "6 LPA", "python"),
+            ("TCS", "cloud engineer", 9.0, "IT", "5 LPA", "python"),
+            ("TCS", "cloud engineer", 9.0, "IT", "5 LPA", "python"),
+            ("TCS", "python developer", 8.5, "IT", "6 LPA", "python"),
+            ("TCS", "cloud engineer", 9.0, "IT", "5 LPA", "python"),
+            ("TCS", "software developer", 9.0, "IT", "6 LPA", "java"),
+            ("Tata Elxsi", "Embedded / Automotive Software / VLSI", 7.5, "ECE", "5 LPA", "C/C++,Digital Electronics"),
+            ("HCLTech", "Electronics Design Engineer", 7.8, "ECE", "5 LPA", "Analog & Digital Electronics"),
+            ("C-DAC", "Project Engineer - Embedded/IoT", 8.5, "ECE", "5 LPA", "Python/C/C++, sensors, microcontrollers, communication protocols"),
+            ("L&T", "Electrical Engineer", 8.2, "EEE", "5 LPA", "Electrical Machines, Power Systems, AutoCAD")
+        ]
+
+        conn.executemany("""
+            INSERT INTO companies (
+                company_name,
+                job_role,
+                min_cgpa,
+                department,
+                package,
+                required_skills
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, sample_companies)
 
     conn.commit()
 
@@ -911,6 +969,7 @@ def dashboard():
     return render_template(
         "dashboard.html",
         student=student,
+        name=(student["name"] if student else ""),
         application_count=application_count
     )
 
@@ -1352,9 +1411,11 @@ def resume():
 
         else:
 
-            filename = secure_filename(
+            original_filename = secure_filename(
                 file.filename
             )
+
+            filename = f"{session['student_id']}_{original_filename}"
 
             filepath = os.path.join(
                 app.config["UPLOAD_FOLDER"],
@@ -1639,8 +1700,8 @@ def admin_login():
         )
 
         if (
-            username == "admin"
-            and password == "admin123"
+            username == ADMIN_USERNAME
+            and password == ADMIN_PASSWORD
         ):
 
             session["admin"] = True
@@ -1869,6 +1930,7 @@ def admin_applications():
         SELECT
             applications.*,
             students.name,
+            students.name AS student_name,
             students.email,
             students.department,
             students.cgpa,

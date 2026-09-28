@@ -20,7 +20,7 @@
 
         <p>
             Welcome,
-            <strong>{{ name }}</strong> 👋
+            <strong>{{ student['name'] if student else (name or '') }}</strong> 👋
         </p>
     </div>
 
