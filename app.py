@@ -637,16 +637,30 @@ def create_database():
 
     if company_count == 0:
         sample_companies = [
-            ("Infosys", "software developer", 8.9, "IT", "6 LPA", "python"),
-            ("TCS", "cloud engineer", 9.0, "IT", "5 LPA", "python"),
-            ("TCS", "cloud engineer", 9.0, "IT", "5 LPA", "python"),
-            ("TCS", "python developer", 8.5, "IT", "6 LPA", "python"),
-            ("TCS", "cloud engineer", 9.0, "IT", "5 LPA", "python"),
-            ("TCS", "software developer", 9.0, "IT", "6 LPA", "java"),
-            ("Tata Elxsi", "Embedded / Automotive Software / VLSI", 7.5, "ECE", "5 LPA", "C/C++,Digital Electronics"),
-            ("HCLTech", "Electronics Design Engineer", 7.8, "ECE", "5 LPA", "Analog & Digital Electronics"),
-            ("C-DAC", "Project Engineer - Embedded/IoT", 8.5, "ECE", "5 LPA", "Python/C/C++, sensors, microcontrollers, communication protocols"),
-            ("L&T", "Electrical Engineer", 8.2, "EEE", "5 LPA", "Electrical Machines, Power Systems, AutoCAD")
+            ("Infosys", "Software Developer", 8.0, "IT", "6 LPA", "python, sql, problem solving"),
+            ("TCS", "Cloud Engineer", 7.5, "IT", "5 LPA", "python, aws, linux"),
+            ("TCS", "Python Developer", 8.0, "IT", "6 LPA", "python, flask, sql"),
+            ("TCS", "Java Developer", 8.0, "IT", "6 LPA", "java, spring boot, sql"),
+            ("Microsoft", "Software Development Engineer", 8.5, "IT", "18 LPA", "python, c++, algorithms, cloud"),
+            ("Amazon", "Cloud Support Associate", 7.5, "IT", "12 LPA", "python, linux, networking, aws"),
+            ("Zoho Corporation", "Full Stack Web Developer", 7.0, "IT", "8.5 LPA", "java, javascript, html, css, react"),
+            ("Deloitte", "Technology Analyst", 7.5, "IT", "9 LPA", "python, sql, communication, problem solving"),
+            ("Capgemini", "Data Analyst", 7.0, "IT", "5.5 LPA", "python, sql, power bi, excel, pandas"),
+            ("Cognizant", "Junior DevOps Engineer", 7.2, "IT", "6 LPA", "docker, git, linux, python, bash"),
+            ("Accenture", "Associate Software Engineer", 6.5, "IT", "4.5 LPA", "java, sql, python, problem solving"),
+            ("Tata Elxsi", "Embedded / Automotive Software / VLSI", 7.5, "ECE", "5 LPA", "c, c++, digital electronics"),
+            ("HCLTech", "Electronics Design Engineer", 7.8, "ECE", "5 LPA", "analog electronics, digital electronics"),
+            ("Qualcomm", "Embedded Software Engineer", 8.0, "ECE", "14 LPA", "c, c++, embedded, linux, microcontrollers"),
+            ("Texas Instruments", "Analog & VLSI Design Engineer", 8.2, "ECE", "15 LPA", "analog electronics, vlsi, verilog, c"),
+            ("Bosch", "Automotive Firmware Engineer", 7.5, "ECE", "7 LPA", "c, c++, microcontrollers, can protocol"),
+            ("C-DAC", "Project Engineer - Embedded/IoT", 8.5, "ECE", "5 LPA", "python, c, c++, sensors, microcontrollers"),
+            ("Schneider Electric", "Power Systems Engineer", 7.0, "EEE", "6.5 LPA", "power systems, matlab, autocad, plc"),
+            ("Siemens", "Automation & SCADA Engineer", 7.5, "EEE", "7.5 LPA", "plc, scada, electrical machines, c"),
+            ("ABB", "Electrical Design Specialist", 7.2, "EEE", "6 LPA", "electrical design, circuit analysis, autocad"),
+            ("L&T", "Electrical Engineer", 8.2, "EEE", "5 LPA", "electrical machines, power systems, autocad"),
+            ("Tata Motors", "Design & CAE Engineer", 7.0, "MECH", "6.5 LPA", "autocad, solidworks, ansys, catia"),
+            ("Larsen & Toubro", "Graduate Engineer Trainee", 7.0, "MECH", "6 LPA", "mechanical design, manufacturing, cad"),
+            ("Mu Sigma", "Decision Scientist", 7.0, "All", "7 LPA", "problem solving, python, communication, statistics")
         ]
 
         conn.executemany("""
@@ -660,6 +674,68 @@ def create_database():
             )
             VALUES (?, ?, ?, ?, ?, ?)
         """, sample_companies)
+
+    # Seed initial students and applications if table is empty (e.g. on fresh deployment)
+    student_count = conn.execute(
+        "SELECT COUNT(*) AS count FROM students"
+    ).fetchone()["count"]
+
+    if student_count == 0:
+        sample_students = [
+            ("Rahul Sharma", "Ramesh Sharma", "Sunita Sharma", "2003-04-15", "Male", "9876543210", "rahul.sharma@example.com", "password123", "IT", 8.8, "python, flask, sql, git, docker"),
+            ("Ananya Iyer", "Subramanian Iyer", "Lakshmi Iyer", "2003-08-22", "Female", "9876543211", "ananya.iyer@example.com", "password123", "IT", 9.3, "java, react, html, css, javascript, nodejs"),
+            ("Karthik Raja", "Rajagopal M", "Meena R", "2002-11-10", "Male", "9876543212", "karthik.raja@example.com", "password123", "ECE", 8.4, "c, c++, embedded, microcontrollers, linux"),
+            ("Divya Nair", "Suresh Nair", "Radhika Nair", "2003-01-19", "Female", "9876543213", "divya.nair@example.com", "password123", "ECE", 7.9, "analog electronics, digital electronics, vlsi, verilog"),
+            ("Arun Kumar", "Mohan Kumar", "Shanthi Kumar", "2002-06-30", "Male", "9876543214", "arun.kumar@example.com", "password123", "EEE", 8.1, "power systems, autocad, matlab, electrical machines"),
+            ("Sneha Patel", "Dinesh Patel", "Bhavna Patel", "2003-09-05", "Female", "9876543215", "sneha.patel@example.com", "password123", "IT", 7.4, "python, sql, pandas, excel, power bi"),
+            ("Mohammed Faiz", "Abdul Kareem", "Amina Begum", "2002-12-14", "Male", "9876543216", "mohammed.faiz@example.com", "password123", "IT", 8.6, "python, aws, linux, docker, git"),
+            ("Pooja Sundaram", "Sundaramurthy", "Kavitha S", "2003-03-25", "Female", "9876543217", "pooja.sundaram@example.com", "password123", "EEE", 7.6, "plc, scada, circuit analysis, autocad"),
+            ("Vigneshwaran K", "Krishnan S", "Geetha K", "2002-07-18", "Male", "9876543218", "vignesh.k@example.com", "password123", "MECH", 7.8, "solidworks, autocad, ansys, python"),
+            ("Swathi Reddy", "Venkat Reddy", "Sujatha Reddy", "2003-05-12", "Female", "9876543219", "swathi.reddy@example.com", "password123", "IT", 8.9, "react, nodejs, javascript, mongodb, html")
+        ]
+
+        conn.executemany("""
+            INSERT INTO students (
+                name, father_name, mother_name, date_of_birth, gender,
+                phone, email, password, department, cgpa, skills
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, sample_students)
+
+        # Seed initial applications
+        all_studs = conn.execute("SELECT id, email FROM students").fetchall()
+        all_comps = conn.execute("SELECT id, company_name FROM companies").fetchall()
+        s_map = {row["email"]: row["id"] for row in all_studs}
+        c_map = {row["company_name"]: row["id"] for row in all_comps}
+
+        apps_to_seed = [
+            ("rahul.sharma@example.com", "Microsoft", "Shortlisted", "2026-09-15 10:30:00"),
+            ("rahul.sharma@example.com", "Amazon", "Selected", "2026-09-18 14:20:00"),
+            ("ananya.iyer@example.com", "Microsoft", "Selected", "2026-09-16 11:00:00"),
+            ("ananya.iyer@example.com", "Zoho Corporation", "Selected", "2026-09-17 15:30:00"),
+            ("karthik.raja@example.com", "Qualcomm", "Shortlisted", "2026-09-19 13:45:00"),
+            ("karthik.raja@example.com", "Bosch", "Selected", "2026-09-22 16:10:00"),
+            ("divya.nair@example.com", "Texas Instruments", "Applied", "2026-09-21 10:00:00"),
+            ("arun.kumar@example.com", "Schneider Electric", "Selected", "2026-09-20 14:00:00"),
+            ("arun.kumar@example.com", "Siemens", "Shortlisted", "2026-09-22 09:40:00"),
+            ("sneha.patel@example.com", "Capgemini", "Selected", "2026-09-24 10:50:00"),
+            ("sneha.patel@example.com", "Deloitte", "Rejected", "2026-09-25 12:15:00"),
+            ("mohammed.faiz@example.com", "Amazon", "Shortlisted", "2026-09-23 15:20:00"),
+            ("mohammed.faiz@example.com", "Cognizant", "Selected", "2026-09-26 14:30:00"),
+            ("pooja.sundaram@example.com", "ABB", "Applied", "2026-09-25 11:10:00"),
+            ("vignesh.k@example.com", "Tata Motors", "Selected", "2026-09-24 13:00:00"),
+            ("swathi.reddy@example.com", "Zoho Corporation", "Selected", "2026-09-22 17:00:00"),
+            ("swathi.reddy@example.com", "Deloitte", "Shortlisted", "2026-09-25 11:45:00")
+        ]
+
+        for s_email, c_name, status, applied_time in apps_to_seed:
+            s_id = s_map.get(s_email)
+            c_id = c_map.get(c_name)
+            if s_id and c_id:
+                conn.execute("""
+                    INSERT OR IGNORE INTO applications (student_id, company_id, status, applied_at)
+                    VALUES (?, ?, ?, ?)
+                """, (s_id, c_id, status, applied_time))
 
     conn.commit()
 
