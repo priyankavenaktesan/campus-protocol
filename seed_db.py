@@ -58,6 +58,23 @@ def seed_database():
         ("BHEL", "Graduate Trainee Engineer", 7.5, "EEE", "6 LPA", "power systems, electrical machines, switchgear"),
         ("Crompton Greaves", "Power Automation Engineer", 7.0, "EEE", "5.5 LPA", "plc, scada, autocad, power systems"),
         ("IBM", "Associate System Engineer", 6.5, "All", "4.5 LPA", "python, java, cloud, communication"),
+
+        # Batch 3 (Premier Global IT Companies)
+        ("Apple", "iOS & Systems Software Engineer", 8.5, "IT", "25 LPA", "swift, c++, python, objective-c, operating systems"),
+        ("Meta", "Full Stack Software Engineer", 8.5, "IT", "28 LPA", "react, python, c++, distributed systems"),
+        ("Netflix", "Cloud Infrastructure Engineer", 8.5, "IT", "30 LPA", "java, python, aws, microservices, docker, kubernetes"),
+        ("Salesforce", "Associate Member of Technical Staff", 8.0, "IT", "16 LPA", "java, apex, javascript, react, cloud"),
+        ("SAP Labs", "Developer Associate", 7.5, "IT", "12 LPA", "java, python, sql, sap abap, docker"),
+        ("Uber", "Software Development Engineer 1", 8.2, "IT", "24 LPA", "python, go, java, microservices, kafka"),
+        ("PayPal", "Software Engineer 1", 8.0, "IT", "14 LPA", "java, nodejs, rest apis, sql, react"),
+        ("Atlassian", "Junior Software Engineer", 8.2, "IT", "17 LPA", "java, react, typescript, aws, docker"),
+        ("Intuit", "Software Engineer Trainee", 7.8, "IT", "15 LPA", "java, spring boot, aws, react, algorithms"),
+        ("Walmart Global Tech", "Software Engineer", 7.5, "IT", "13 LPA", "java, python, spring boot, kafka, cloud"),
+        ("Morgan Stanley", "Technology Analyst", 8.0, "IT", "16 LPA", "java, c++, python, algorithms, sql"),
+        ("ServiceNow", "Associate Software Engineer", 7.8, "IT", "14 LPA", "javascript, angular, react, java, database"),
+        ("Twitter", "Backend Platform Engineer", 8.0, "IT", "20 LPA", "python, scala, java, redis, distributed systems"),
+        ("VMware", "Member of Technical Staff", 8.0, "IT", "15 LPA", "c++, python, virtualization, linux, networking"),
+        ("HashedIn", "Software Engineer - Products", 7.2, "IT", "8 LPA", "python, django, react, javascript, aws"),
     ]
 
     new_companies_count = 0
@@ -191,6 +208,17 @@ def seed_database():
         ("vigneshwar.r@example.com", "IBM", "Selected", "2026-09-25 09:20:00"),
         ("aditi.saxena@example.com", "Google", "Selected", "2026-09-22 17:00:00"),
         ("aditi.saxena@example.com", "Microsoft", "Selected", "2026-09-24 10:00:00"),
+        ("aditi.saxena@example.com", "Apple", "Selected", "2026-09-26 14:00:00"),
+        ("priyanka.sen@example.com", "Meta", "Selected", "2026-09-25 15:30:00"),
+        ("rahul.sharma@example.com", "Netflix", "Shortlisted", "2026-09-26 11:20:00"),
+        ("ananya.iyer@example.com", "Salesforce", "Selected", "2026-09-24 16:45:00"),
+        ("harini.venkat@example.com", "Uber", "Shortlisted", "2026-09-25 10:15:00"),
+        ("rohit.verma@example.com", "PayPal", "Selected", "2026-09-26 13:00:00"),
+        ("swathi.reddy@example.com", "Atlassian", "Selected", "2026-09-25 16:00:00"),
+        ("mohammed.faiz@example.com", "Intuit", "Shortlisted", "2026-09-27 09:30:00"),
+        ("sneha.patel@example.com", "Walmart Global Tech", "Selected", "2026-09-26 15:10:00"),
+        ("deepa.krishnan@example.com", "Morgan Stanley", "Selected", "2026-09-27 11:00:00"),
+        ("abhinav.mishra@example.com", "ServiceNow", "Shortlisted", "2026-09-27 14:30:00"),
         ("naveen.balaji@example.com", "Schneider Electric", "Shortlisted", "2026-09-26 15:00:00"),
     ]
 
